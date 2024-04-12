@@ -1,8 +1,6 @@
 import { ENV } from "@/constants/env";
 import axios, { AxiosRequestConfig } from "axios";
-
 const instance = axios.create();
-
 export const requests = {
   get: <T>(url: string, config?: AxiosRequestConfig): Promise<T> =>
     instance.get<T>(`${ENV.API_ROOT}${url}`, config).then(({ data }) => data),
@@ -31,8 +29,6 @@ export const requests = {
 export const API = {
   jokesApi: {
     fetchJokes: () =>
-      axios
-        .get<{ jokes: string[] }>("https://api.icndb.com/jokes/random/5")
-        .then(({ data }) => data.jokes),
+      axios.get<{ jokes: string[] }>("https://v2.jokeapi.dev/joke/Any"),
   },
 };
