@@ -159,6 +159,18 @@ export const API = {
           },
         }
       ),
+    getPatientAppointmentByID: (userID: string, token: string) =>
+      requests.get<any>(`/workspaces/patients/${userID}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }),
+    getPatients: (workspaceID: string, token: string) =>
+      requests.get<any>(`/workspaces/${workspaceID}/patients`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }),
   },
   cases: {
     createCase: (

@@ -34,9 +34,7 @@ const columns: ColumnDef<TAppointmentRow>[] = [
         </Button>
       );
     },
-    cell: ({ row }) => (
-      <div className="lowercase">{row.getValue("start_time")}</div>
-    ),
+    cell: ({ row }) => <div>{row.getValue("start_time")}</div>,
   },
   {
     accessorKey: "end_time",
@@ -51,26 +49,22 @@ const columns: ColumnDef<TAppointmentRow>[] = [
         </Button>
       );
     },
-    cell: ({ row }) => (
-      <div className="lowercase">{row.getValue("end_time")}</div>
-    ),
+    cell: ({ row }) => <div>{row.getValue("end_time")}</div>,
   },
   {
-    accessorKey: "userID",
+    accessorKey: "reason",
     header: ({ column }) => {
       return (
         <Button
           variant="ghost"
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
-          userID
+          Reason
           <RxCaretSort className="ml-2 h-4 w-4" />
         </Button>
       );
     },
-    cell: ({ row }) => (
-      <div className="lowercase">{row.getValue("userID")}</div>
-    ),
+    cell: ({ row }) => <div>{row.getValue("reason")}</div>,
   },
   {
     accessorKey: "status",
@@ -85,9 +79,7 @@ const columns: ColumnDef<TAppointmentRow>[] = [
         </Button>
       );
     },
-    cell: ({ row }) => (
-      <div className="lowercase">{row.getValue("status")}</div>
-    ),
+    cell: ({ row }) => <div>{row.getValue("status")}</div>,
   },
   {
     accessorKey: "type",
@@ -102,7 +94,7 @@ const columns: ColumnDef<TAppointmentRow>[] = [
         </Button>
       );
     },
-    cell: ({ row }) => <div className="lowercase">{row.getValue("type")}</div>,
+    cell: ({ row }) => <div>{row.getValue("type")}</div>,
   },
 ];
 
@@ -123,32 +115,25 @@ const Dashboard = () => {
         id: appointment.appointment.id,
         start_time: appointment.appointment.start_time,
         end_time: appointment.appointment.end_time,
-        userID: appointment.userId,
+        reason: appointment.appointment.reason,
         status: appointment.appointment.status,
         type: appointment.appointment.type,
       };
     });
   return (
     <div className="w-full p-4">
-      {isAppointmentsLoading ? (
-        <div className="w-full bg-white flex justify-center items-center h-[256px] rounded-md">
-          <div className="animate-spin">
-            <LuLoader2 size={48} className="text-primaryGreen" />
-          </div>
-        </div>
-      ) : (
-        <DataTable
-          data={appointmentsArray ?? []}
-          columns={columns}
-          filterField="userID"
-          filterPlaceholder="Filter by patient name"
-          onRowClick={(row) => {
-            route.push(
-              `/appointments/appointment/${row.appointmentId}${workspaceID ? "?workspace=" + workspaceID : ""}`
-            );
-          }}
-        />
-      )}
+      <DataTable
+        isLoading={isAppointmentsLoading}
+        data={appointmentsArray ?? []}
+        columns={columns}
+        filterField="reason"
+        filterPlaceholder="Filter by patient name"
+        onRowClick={(row) => {
+          route.push(
+            `/appointments/appointment/${row.appointmentId}${workspaceID ? "?workspace=" + workspaceID : ""}`
+          );
+        }}
+      />
     </div>
   );
 };

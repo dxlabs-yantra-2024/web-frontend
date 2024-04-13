@@ -5,6 +5,7 @@ import { GoHomeFill } from "react-icons/go";
 import { IoNotifications } from "react-icons/io5";
 import { WorkspaceDialog } from "../WorkspaceDialog/WorkspaceDialog";
 import { Suspense } from "react";
+import { RxAvatar } from "react-icons/rx";
 
 const BREADCRUMB_LABEL: Record<string, string> = {
   appointments: "Appointments",
@@ -29,7 +30,7 @@ const PageWithSidebarLayout = ({ children }: { children: React.ReactNode }) => {
                   <WorkspaceDialog />
                 </div>
                 <IoNotifications className="text-primaryGreen" size={20} />
-                <div>Avatar</div>
+                <RxAvatar size={20} />
               </div>
             </div>
             <div className="px-5 py-1 flex items-center gap-3">

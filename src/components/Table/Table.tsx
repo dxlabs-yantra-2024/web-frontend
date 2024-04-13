@@ -24,6 +24,7 @@ import {
 } from "./TableRaw";
 import { Input } from "../Input";
 import { Button } from "../Button";
+import { LuLoader2 } from "react-icons/lu";
 
 // const data: Payment[] = [
 //   {
@@ -111,12 +112,14 @@ export function DataTable({
   filterField,
   filterPlaceholder,
   onRowClick,
+  isLoading,
 }: {
   data: any[];
   columns: ColumnDef<any>[];
   filterField: string;
   filterPlaceholder: string;
   onRowClick?: (row: any) => void;
+  isLoading: boolean;
 }) {
   const [sorting, setSorting] = React.useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
@@ -145,8 +148,18 @@ export function DataTable({
     },
   });
 
+  if (isLoading) {
+    return (
+      <div className="w-full bg-white flex justify-center items-center h-[256px] rounded-md">
+        <div className="animate-spin">
+          <LuLoader2 size={48} className="text-primaryGreen" />
+        </div>
+      </div>
+    );
+  }
+
   return (
-    <div className="bg-white p-4 px-8 rounded-md ">
+    <div className="bg-white p-4 rounded-md ">
       <div className="flex items-center py-4 ">
         <Input
           placeholder={filterPlaceholder}
