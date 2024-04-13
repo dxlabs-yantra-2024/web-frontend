@@ -134,11 +134,14 @@ export const API = {
         },
       }),
     getAppointmentByWorkspaceID: (workspaceID: string, token: string) =>
-      requests.get<any>(`/workspaces/${workspaceID}/appointments`, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      }),
+      requests.get<any>(
+        `/workspaces/${workspaceID ? workspaceID + "/" : ""}appointments`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      ),
     getAppointmentByID: (id: string, token: string) =>
       requests.get<any>(`/workspaces/appointments/${id}`, {
         headers: {
@@ -166,11 +169,14 @@ export const API = {
         },
       }),
     getPatients: (workspaceID: string, token: string) =>
-      requests.get<any>(`/workspaces/${workspaceID}/patients`, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      }),
+      requests.get<any>(
+        `/workspaces/${workspaceID ? workspaceID + "/" : ""}patients`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      ),
   },
   cases: {
     createCase: (
