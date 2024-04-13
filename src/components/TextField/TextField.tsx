@@ -10,7 +10,7 @@ type TextFieldProps = {
 const TextField = ({ label, iconName, register, ...props }: TextFieldProps) => {
   return (
     <div className="flex flex-col gap-2 ">
-      {label && <label>{label}</label>}
+      {label && <label className="text-primaryGreen text-sm">{label}</label>}
       <div className="relative flex ">
         {iconName && (
           <div className="absolute left-2 top-[8px]">

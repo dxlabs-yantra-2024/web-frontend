@@ -18,9 +18,11 @@ const PageWithSidebarLayout = ({ children }: { children: React.ReactNode }) => {
   const pathname = usePathname();
   const currentPath = pathname?.split("/")[1];
   return (
-    <div className="min-h-full h-full min-w-full w-full flex">
-      <Sidebar />
-      <div className="flex-grow ">
+    <div className="min-h-full h-full min-w-full w-full flex relative">
+      <div className="fixed top-0 h-[100vh]">
+        <Sidebar />
+      </div>
+      <div className="flex-grow ml-[246px]">
         <div className="flex flex-col">
           <div className="flex flex-col bg-white">
             <div className="px-5 py-3 flex justify-between border-b-2 border-gray-200 items-center ">

@@ -241,4 +241,52 @@ export const API = {
       >
     ) => requests.post("/cases/visits", visitDetails),
   },
+  abdm: {
+    generateOTP: (aadhaarNumber: string) =>
+      requests.post("/abdm/registration/aadhaar/generateOtp", {
+        aadhaarNumber,
+      }),
+    verifyOTP: (otp: string, txnId: string) =>
+      requests.post("/abdm/registration/aadhaar/verifyOtp", {
+        otp,
+        txnId,
+      }),
+    generateUserOTP: (mobileNumber: string) =>
+      requests.post("/abdm/registration/mobile/login/generateOtp", {
+        mobile: mobileNumber,
+      }),
+    verifyUserOTP: (otp: string, txnId: string) =>
+      requests.post("/abdm/registration/mobile/login/verifyOtp", {
+        otp,
+        txnId,
+      }),
+    generateAuthToken: (healthId: string, txnId: string, Token: string) =>
+      requests.post("/abdm/registration/mobile/login/userAuthorizedToken", {
+        healthId,
+        txnId,
+        Token,
+      }),
+
+    getCard: (token: string) =>
+      requests.post(
+        "/abdm/account/getCard",
+        {
+          abdmToken: token,
+        },
+        {
+          headers: {
+            "X-Token": token,
+          },
+        }
+      ),
+    createUserAfterABDM: (txnId: string) =>
+      requests.post("/abdm/registration/aadhaar/createHealthIdByAdhaar", {
+        txnId,
+      }),
+    mobileOTP: (txnId: string, mobileNumber: string) =>
+      requests.post("/abdm/registration/aadhaar/checkAndGenerateMobileOTP", {
+        txnId,
+        mobile: mobileNumber,
+      }),
+  },
 };

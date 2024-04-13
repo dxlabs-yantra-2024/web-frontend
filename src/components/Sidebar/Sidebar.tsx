@@ -56,6 +56,18 @@ const SIDEBAR_ITEMS: SidebarItemType[] = [
     href: "/settings",
     type: "link",
   },
+  {
+    label: "Create ABDM",
+    icon: <IoSettingsOutline />,
+    href: "/create-abdm",
+    type: "link",
+  },
+  {
+    label: "Create user card",
+    icon: <IoSettingsOutline />,
+    href: "/create-user-card",
+    type: "link",
+  },
 ];
 
 const SidebarItem = (props: SidebarItemType) => {
@@ -88,8 +100,8 @@ const SidebarItem = (props: SidebarItemType) => {
 
 const Sidebar = () => {
   return (
-    <Suspense>
-      <div className="pt-5 pb-8 px-6 gap-12 h-full flex flex-col bg-white">
+    <div className="pt-5 pb-8 px-6 gap-12 h-full flex flex-col bg-white">
+      <Suspense>
         <Image src={Logo} height={58} alt="logo" />
         <div className="flex-grow flex flex-col justify-between">
           <div className="flex flex-col gap-7">
@@ -105,8 +117,8 @@ const Sidebar = () => {
             className="text-[#CC5F5F]"
           />
         </div>
-      </div>
-    </Suspense>
+      </Suspense>
+    </div>
   );
 };
 

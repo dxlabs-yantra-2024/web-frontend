@@ -6,14 +6,19 @@ const CardWithSeparator = ({
   titleComponent,
   children,
   cardClassName,
+  subtext,
 }: {
   titleComponent: React.ReactNode;
   children: React.ReactNode;
   cardClassName?: string;
+  subtext?: string;
 }) => {
   return (
     <div className={`bg-white p-5 flex flex-col rounded-12 ${cardClassName}`}>
-      {titleComponent}
+      <div className="flex flex-col gap-2">
+        {titleComponent}
+        {subtext && <p className="text-sm text-gray-400">{subtext}</p>}
+      </div>
       <div className="w-full h-[1px] border border-[#E1E2E9] my-3" />
       {children}
     </div>
