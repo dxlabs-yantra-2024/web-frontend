@@ -3,7 +3,7 @@ import Image from "next/image";
 import Logo from "../../../public/assets/logo.svg";
 import { usePathname, useSearchParams } from "next/navigation";
 import Link from "next/link";
-import { IoLogOut, IoSettingsOutline } from "react-icons/io5";
+import { IoCreateOutline, IoLogOut, IoSettingsOutline } from "react-icons/io5";
 import { LuLayoutDashboard } from "react-icons/lu";
 import { CiFolderOn } from "react-icons/ci";
 import { MdOutlinePeopleAlt } from "react-icons/md";
@@ -58,13 +58,13 @@ const SIDEBAR_ITEMS: SidebarItemType[] = [
   },
   {
     label: "Create ABDM",
-    icon: <IoSettingsOutline />,
+    icon: <IoCreateOutline />,
     href: "/create-abdm",
     type: "link",
   },
   {
     label: "Create user card",
-    icon: <IoSettingsOutline />,
+    icon: <IoCreateOutline />,
     href: "/create-user-card",
     type: "link",
   },
