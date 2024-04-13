@@ -48,7 +48,9 @@ export const requests = {
     body?: T,
     config?: AxiosRequestConfig
   ): Promise<Q> =>
-    instance.patch<Q>(`${ENV.API_ROOT}${url}`, body).then(({ data }) => data),
+    instance
+      .patch<Q>(`${ENV.API_ROOT}${url}`, body, config)
+      .then(({ data }) => data),
 };
 
 export const API = {

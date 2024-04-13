@@ -73,7 +73,7 @@ const SidebarItem = (props: SidebarItemType) => {
       </button>
     );
   }
-  const isActive = pathname === props.href;
+  const isActive = "/" + pathname.split("/")[1] === props.href;
   const { label, icon, href } = props;
   return (
     <Link

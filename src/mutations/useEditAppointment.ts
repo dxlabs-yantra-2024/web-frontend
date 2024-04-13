@@ -16,6 +16,7 @@ export type TEditAppointment = Pick<
 
 const useEditAppointment = () => {
   const { token } = useGetToken();
+  console.log({ token });
   const mutation = useMutation({
     mutationFn: ({
       appointment,

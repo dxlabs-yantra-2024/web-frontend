@@ -7,6 +7,7 @@ import { TAppointment } from "@/types/appointment";
 import { AppointmentStatus, AppointmentType } from "@/types/case";
 import { ColumnDef } from "@tanstack/react-table";
 import { useRouter, useSearchParams } from "next/navigation";
+import { LuLoader2 } from "react-icons/lu";
 import { RxCaretSort } from "react-icons/rx";
 
 type TAppointmentRow = {
@@ -108,9 +109,10 @@ const columns: ColumnDef<TAppointmentRow>[] = [
 const Dashboard = () => {
   const searchParams = useSearchParams();
   const workspaceID = searchParams.get("workspace");
-  const { data: appointments } = useGetAppointmentsByWorkspaceID({
-    workspaceID: workspaceID ?? "",
-  });
+  const { data: appointments, isLoading: isAppointmentsLoading } =
+    useGetAppointmentsByWorkspaceID({
+      workspaceID: workspaceID ?? "",
+    });
   const route = useRouter();
   console.log(appointments?.data);
   const appointmentsArray = appointments?.data
@@ -127,19 +129,27 @@ const Dashboard = () => {
       };
     });
   return (
-    <>
-      <DataTable
-        data={appointmentsArray ?? []}
-        columns={columns}
-        filterField="userID"
-        filterPlaceholder="Filter by patient name"
-        onRowClick={(row) => {
-          route.push(
-            `/appointments/appointment/${row.appointmentId}${workspaceID ? "?workspace=" + workspaceID : ""}`
-          );
-        }}
-      />
-    </>
+    <div className="w-full p-4">
+      {isAppointmentsLoading ? (
+        <div className="w-full bg-white flex justify-center items-center h-[256px] rounded-md">
+          <div className="animate-spin">
+            <LuLoader2 size={48} className="text-primaryGreen" />
+          </div>
+        </div>
+      ) : (
+        <DataTable
+          data={appointmentsArray ?? []}
+          columns={columns}
+          filterField="userID"
+          filterPlaceholder="Filter by patient name"
+          onRowClick={(row) => {
+            route.push(
+              `/appointments/appointment/${row.appointmentId}${workspaceID ? "?workspace=" + workspaceID : ""}`
+            );
+          }}
+        />
+      )}
+    </div>
   );
 };
 
