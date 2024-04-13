@@ -1,7 +1,5 @@
 import { API } from "@/helpers/api/requests";
-import { useGetToken } from "@/hooks/useGetToken";
-import { TDoctor } from "@/types/doctor";
-import { TWorkspace } from "@/types/workspace";
+
 import { useMutation } from "@tanstack/react-query";
 
 const useADBMVerifyOTP = () => {
@@ -14,4 +12,4 @@ const useADBMVerifyOTP = () => {
   return mutation;
 };
 
-export default useADBMVerifyOTP;
+export { useADBMVerifyOTP };

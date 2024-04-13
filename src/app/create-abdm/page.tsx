@@ -8,7 +8,7 @@ import {
 } from "@/components/CardWithSeparator";
 import { TextField } from "@/components/TextField";
 import { API } from "@/helpers/api/requests";
-import useADBMVerifyOTP from "@/mutations/useAdbmVerifyOTP";
+import { useADBMVerifyOTP } from "@/mutations/useADBMVerifyOTP";
 import useGenerateABDMOTP from "@/mutations/useGenerateABDMOtp";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
