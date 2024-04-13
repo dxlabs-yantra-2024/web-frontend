@@ -103,3 +103,15 @@ export type TReferralDetails = {
   doctor_contact: string;
   details: string;
 };
+
+export enum AppointmentType {
+  ONSITE,
+  ONLINE,
+}
+
+export enum AppointmentStatus {
+  PENDING,
+  CONFIRMED,
+  CANCELLED,
+  COMPLETED,
+}

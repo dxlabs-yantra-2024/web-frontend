@@ -1,7 +1,7 @@
 "use client";
 import Image from "next/image";
 import Logo from "../../../public/assets/logo.svg";
-import { usePathname } from "next/navigation";
+import { usePathname, useSearchParams } from "next/navigation";
 import Link from "next/link";
 import { IoLogOut, IoSettingsOutline } from "react-icons/io5";
 import { LuLayoutDashboard } from "react-icons/lu";
@@ -59,6 +59,8 @@ const SIDEBAR_ITEMS: SidebarItemType[] = [
 
 const SidebarItem = (props: SidebarItemType) => {
   const pathname = usePathname();
+  const searchParams = useSearchParams();
+  const workspace = searchParams.get("workspace");
   if (props.type === "button") {
     const { label, icon, onClick } = props;
     return (
@@ -74,7 +76,7 @@ const SidebarItem = (props: SidebarItemType) => {
   const { label, icon, href } = props;
   return (
     <Link
-      href={href}
+      href={workspace ? `${href}?workspace=${workspace}` : href}
       className={`${props.className} flex items-center gap-4 px-4 ${isActive ? "bg-primaryGreen py-5 text-white rounded-12" : "text-black50"}`}
     >
       {icon}

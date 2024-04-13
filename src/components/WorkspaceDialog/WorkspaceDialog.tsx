@@ -57,7 +57,7 @@ const WorkspaceDialog = () => {
             ) : (
               <>
                 {myWorkspaces?.data?.map((workspace: any, index: number) => (
-                  <Link href="/" key={workspace.id}>
+                  <Link href={`?workspace=${workspace.id}`} key={workspace.id}>
                     <DropdownMenu.Item className="group text-[13px] leading-none text-black rounded-[3px] flex items-center h-[25px] px-[5px] relative pl-[25px] select-none outline-none data-[disabled]:text-mauve8 data-[disabled]:pointer-events-none data-[highlighted]:bg-primaryGreen data-[highlighted]:text-violet1">
                       {workspace.name
                         ? `${index + 1} - ${workspace.name}`

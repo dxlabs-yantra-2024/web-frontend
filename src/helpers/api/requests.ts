@@ -109,13 +109,30 @@ export const API = {
           },
         }
       ),
-    getWorkspaceByID: (id: string) => requests.get(`/workspaces/${id}`),
+    getWorkspaceByID: (id: string, token: string) =>
+      requests.get(`/workspaces/${id}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }),
     getWorkspaceByOrganizationID: (orgID: string) =>
       requests.get(`/workspaces/org/${orgID}`),
     editWorkspace: (workspaceDetails: TWorkspace) =>
       requests.patch(`/workspaces/${workspaceDetails.id}`, workspaceDetails),
     getWorkspaces: (token: string) =>
       requests.get<any>("/workspaces", {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }),
+    getAppointmentByWorkspaceID: (workspaceID: string, token: string) =>
+      requests.get<any>(`/workspaces/${workspaceID}/appointments`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }),
+    getAppointmentByID: (id: string, token: string) =>
+      requests.get<any>(`/workspaces/appointments/${id}`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
