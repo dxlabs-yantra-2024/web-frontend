@@ -62,10 +62,12 @@ const SidebarItem = (props: SidebarItemType) => {
   if (props.type === "button") {
     const { label, icon, onClick } = props;
     return (
-      <div className={`${props.className} flex gap-4 items-center px-4`}>
-        {icon}
-        <button onClick={onClick}>{label}</button>
-      </div>
+      <button
+        className={`${props.className} flex gap-4 items-center px-4`}
+        onClick={onClick}
+      >
+        {icon} {label}
+      </button>
     );
   }
   const isActive = pathname === props.href;

@@ -3,9 +3,11 @@ import Image from "next/image";
 type TextFieldProps = {
   label?: string;
   iconName?: string;
+  name: string;
+  register?: any;
 } & React.ComponentProps<"input">;
 
-const TextField = ({ label, iconName, ...props }: TextFieldProps) => {
+const TextField = ({ label, iconName, register, ...props }: TextFieldProps) => {
   return (
     <div className="flex flex-col gap-2 ">
       {label && <label>{label}</label>}
@@ -22,6 +24,7 @@ const TextField = ({ label, iconName, ...props }: TextFieldProps) => {
         )}
         <input
           className={`py-2 px-4 min-w-[375px] border border-textFieldBorder rounded-[8px] ${iconName ? "pl-10 " : ""}`}
+          {...register?.(props.name)}
           {...props}
         />
       </div>
