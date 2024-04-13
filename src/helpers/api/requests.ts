@@ -18,6 +18,8 @@ import {
   TVisitDetails,
   TVitalsDetails,
 } from "@/types/case";
+import { TEditAppointment } from "@/mutations/useEditAppointment";
+import { TAppointment } from "@/types/appointment";
 const instance = axios.create();
 
 export const requests = {
@@ -41,7 +43,11 @@ export const requests = {
     instance
       .delete<Q>(`${ENV.API_ROOT}${url}`, { data: body })
       .then(({ data }) => data),
-  patch: <T, Q>(url: string, body?: T): Promise<Q> =>
+  patch: <T, Q>(
+    url: string,
+    body?: T,
+    config?: AxiosRequestConfig
+  ): Promise<Q> =>
     instance.patch<Q>(`${ENV.API_ROOT}${url}`, body).then(({ data }) => data),
 };
 
@@ -137,6 +143,20 @@ export const API = {
           Authorization: `Bearer ${token}`,
         },
       }),
+    editAppointment: (
+      appointmentDetails: TEditAppointment,
+      appointmentId: TAppointment["appointmentId"],
+      token: string
+    ) =>
+      requests.patch(
+        `/workspaces/appointments/${appointmentId}`,
+        appointmentDetails,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      ),
   },
   cases: {
     createCase: (

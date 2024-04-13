@@ -8,6 +8,7 @@ import { LuLayoutDashboard } from "react-icons/lu";
 import { CiFolderOn } from "react-icons/ci";
 import { MdOutlinePeopleAlt } from "react-icons/md";
 import { PiBagSimple } from "react-icons/pi";
+import { Suspense } from "react";
 
 type SidebarItemType = {
   label: string;
@@ -87,23 +88,25 @@ const SidebarItem = (props: SidebarItemType) => {
 
 const Sidebar = () => {
   return (
-    <div className="pt-5 pb-8 px-6 gap-12 h-full flex flex-col bg-white">
-      <Image src={Logo} height={58} alt="logo" />
-      <div className="flex-grow flex flex-col justify-between">
-        <div className="flex flex-col gap-7">
-          {SIDEBAR_ITEMS.map((item) => {
-            return <SidebarItem key={item.label} {...item} />;
-          })}
+    <Suspense>
+      <div className="pt-5 pb-8 px-6 gap-12 h-full flex flex-col bg-white">
+        <Image src={Logo} height={58} alt="logo" />
+        <div className="flex-grow flex flex-col justify-between">
+          <div className="flex flex-col gap-7">
+            {SIDEBAR_ITEMS.map((item) => {
+              return <SidebarItem key={item.label} {...item} />;
+            })}
+          </div>
+          <SidebarItem
+            type="button"
+            onClick={() => {}}
+            icon={<IoLogOut color="#CC5F5F" />}
+            label="Logout"
+            className="text-[#CC5F5F]"
+          />
         </div>
-        <SidebarItem
-          type="button"
-          onClick={() => {}}
-          icon={<IoLogOut color="#CC5F5F" />}
-          label="Logout"
-          className="text-[#CC5F5F]"
-        />
       </div>
-    </div>
+    </Suspense>
   );
 };
 

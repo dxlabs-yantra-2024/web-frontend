@@ -4,6 +4,7 @@ import { usePathname } from "next/navigation";
 import { GoHomeFill } from "react-icons/go";
 import { IoNotifications } from "react-icons/io5";
 import { WorkspaceDialog } from "../WorkspaceDialog/WorkspaceDialog";
+import { Suspense } from "react";
 
 const BREADCRUMB_LABEL: Record<string, string> = {
   appointments: "Appointments",
@@ -40,7 +41,10 @@ const PageWithSidebarLayout = ({ children }: { children: React.ReactNode }) => {
               </p>
             </div>
           </div>
-          <div>{children}</div>
+
+          <div>
+            <Suspense>{children}</Suspense>
+          </div>
         </div>
       </div>
     </div>

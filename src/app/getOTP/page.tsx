@@ -1,10 +1,7 @@
 "use client";
 import { Header } from "@/components/Header/Header";
 import { TextField } from "@/components/TextField";
-import useCreateDoctor from "@/mutations/useCreateDoctor";
-import { TDoctor } from "@/types/doctor";
 import Image from "next/image";
-// import { useRouter } from "next/router";
 import { useForm } from "react-hook-form";
 import { useRouter, useSearchParams } from "next/navigation";
 import useGetOTP from "@/mutations/useGetOTP";
@@ -123,5 +120,3 @@ export default function Home() {
     </div>
   );
 }
-
-// "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2MTliODc4MzcxNjJhOTY5NjdhZDkzNyIsInJvbGUiOiJwZW5kaW5nIiwiaWF0IjoxNzEyOTYxNjU2LCJleHAiOjE3MTM4MjU2NTZ9.0zjcnevsO9chO3vN2zWR5FrZ0RBHjx6wKrZ2Hbr4fgM",

@@ -24,7 +24,7 @@ export type TAppointment = {
   type: AppointmentType;
   visit_number?: string;
   case_id?: number;
-  appointmentId?: number;
+  appointmentId?: string;
   doctorId?: number;
 
   reason?: string;
