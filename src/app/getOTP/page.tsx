@@ -46,9 +46,7 @@ export default function Home() {
       }
     );
   };
-  
-    reset();
-  };
+
   return (
     <div className="h-[100%] flex flex-col ">
       <Header />

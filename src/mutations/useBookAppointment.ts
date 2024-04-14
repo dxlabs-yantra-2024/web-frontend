@@ -18,4 +18,4 @@ const useBookAppointment = () => {
   return mutation;
 };
 
-export default useBookAppointment;
+export { useBookAppointment };

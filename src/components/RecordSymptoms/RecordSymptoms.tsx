@@ -49,6 +49,7 @@ const RecordSymptoms = ({
   setModalOpen: () => void;
 }) => {
   const onCloseModal = useCallback(() => {
+    // @ts-ignore
     setModalOpen(false);
   }, [setModalOpen]);
 

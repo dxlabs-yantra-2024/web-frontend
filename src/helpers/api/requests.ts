@@ -118,7 +118,7 @@ export const API = {
   },
   patients: {
     getDoctorByID: (id: string, token: string) =>
-      requests.get(`/users/doctors/${id}`, {
+      requests.get<any>(`/users/doctors/${id}`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -183,13 +183,13 @@ export const API = {
         }
       ),
     getAllAppointments: (token: string) =>
-      requests.get("/users/appointments", {
+      requests.get<any>("/users/appointments", {
         headers: {
           Authorization: `Bearer ${token}`,
         },
       }),
     getAllDoctors: (token: string) =>
-      requests.get("/users/doctors", {
+      requests.get<any>("/users/doctors", {
         headers: {
           Authorization: `Bearer ${token}`,
         },

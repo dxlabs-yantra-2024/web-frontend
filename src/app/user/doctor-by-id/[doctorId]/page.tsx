@@ -10,15 +10,16 @@ import {
 import { DataTable } from "@/components/Table/Table";
 import { useGetDoctorByID } from "@/queries/useGetDoctorByID";
 import { ColumnDef } from "@tanstack/react-table";
-import Link from "next/link";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { RxCaretSort } from "react-icons/rx";
 import { IoClose } from "react-icons/io5";
 import { TextField } from "@/components/TextField";
 import { useForm } from "react-hook-form";
 import { Calendar } from "@/components/Calendar/calendar";
-import useBookAppointment from "@/mutations/useBookAppointment";
+import { useBookAppointment } from "@/mutations/useBookAppointment";
 import { addHours, format } from "date-fns";
+import { useParams } from "next/navigation";
+import { Label } from "@/components/Label";
 
 type TAppointmentRow = {
   id: string;
@@ -39,19 +40,7 @@ const formatDate = (date: Date) => {
   return formattedDate;
 };
 
-const Label = ({ children }: { children: string }) => {
-  return <label className="text-sm text-primaryGreen">{children}</label>;
-};
-
-export const Index = ({
-  params,
-}: {
-  params: {
-    doctorId: string;
-  };
-}) => {
-  const [bookedWorkspaces, setBookedWorkspaces] = useState<string[]>([]);
-
+export const Doc = () => {
   const columns: ColumnDef<TAppointmentRow>[] = [
     {
       accessorKey: "name",
@@ -130,7 +119,10 @@ export const Index = ({
       },
     },
   ];
-
+  const [bookedWorkspaces, setBookedWorkspaces] = useState<string[]>([]);
+  const params: {
+    doctorId: string;
+  } = useParams();
   const { data: doctor, isLoading: isDoctorLoading } = useGetDoctorByID({
     id: params.doctorId ?? "",
     type: "Patient",
@@ -144,7 +136,7 @@ export const Index = ({
       status: "Available",
     };
   });
-  const [selectedWorkspace, setSelectedWorkspace] = useState(null);
+  const [selectedWorkspace, setSelectedWorkspace] = useState<any>(null);
   const [isBookingDialogOpen, setIsBookingDialogOpen] = useState(false);
   const [startDate, setStartDate] = useState<Date>(new Date());
   const [endDate, setEndDate] = useState<Date>(new Date());
@@ -294,4 +286,4 @@ export const Index = ({
   );
 };
 
-export default Index;
+export default Doc;

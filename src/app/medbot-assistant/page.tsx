@@ -27,12 +27,12 @@ const MedBot = () => {
   const { mutate: chatWithMedbot } = useAskMedbot();
   const userId = "661914e61392228313e6ba";
   const messagesEndRef = useRef<HTMLDivElement>(null);
-  const [messageHistory, setMessageHistory] = useState([]);
+  const [messageHistory, setMessageHistory] = useState<any>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [lastMessageType, setlastMessageType] = useState("");
-  const [sourcesResponse, setSourcesResponse] = useState([]);
-  const [gptResponse, setGptResponse] = useState([]);
-  const [followupResponse, setFollowupResponse] = useState([]);
+  const [sourcesResponse, setSourcesResponse] = useState<any>([]);
+  const [gptResponse, setGptResponse] = useState<any>([]);
+  const [followupResponse, setFollowupResponse] = useState<any>([]);
   const { token } = useGetToken();
   const {
     register,
