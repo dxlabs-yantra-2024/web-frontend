@@ -20,6 +20,12 @@ import { RecordSymptoms } from "@/components/RecordSymptoms";
 import { ENV } from "@/constants/env";
 import { AudioRecorder } from "react-audio-voice-recorder";
 import { LuLoader2 } from "react-icons/lu";
+import useEditAppointmentFields from "@/mutations/useEditAppointmentFields";
+import {
+  MedicationsForm,
+  SymptomsForm,
+  VitalsForm,
+} from "@/components/EditAppointmentSections";
 
 export interface ApiResponse {
   status: boolean;
@@ -49,186 +55,6 @@ export interface Condition {
   probability: string;
   insights: string;
 }
-const MedicationsForm = ({
-  setSectionsData,
-}: {
-  setSectionsData: React.Dispatch<React.SetStateAction<any>>;
-}) => {
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm();
-  return (
-    <CardWithSeparator
-      titleComponent={
-        <CardWithSeparatorTitleText>Medications</CardWithSeparatorTitleText>
-      }
-      cardClassName="mb-8"
-    >
-      <form>
-        <div className="grid grid-cols-2 gap-9">
-          <TextField
-            name="medication"
-            label="Medication"
-            placeholder="Amoxicillin"
-            register={register}
-          />
-          <TextField
-            name="dose"
-            label="Dose"
-            placeholder="500 mg"
-            register={register}
-          />
-          <TextField
-            name="frequency"
-            label="Frequency"
-            placeholder="3 times a day"
-            register={register}
-          />
-          <TextField
-            name="duration"
-            label="Duration"
-            placeholder="14 days"
-            register={register}
-          />
-          <TextField
-            name="startsFrom"
-            label="Starts From"
-            placeholder="14 April 2024"
-            register={register}
-          />
-          <TextField
-            name="timing"
-            label="Timing"
-            placeholder="Morning, Evening"
-            register={register}
-          />
-        </div>
-      </form>
-    </CardWithSeparator>
-  );
-};
-const VitalsForm = ({
-  setSectionsData,
-}: {
-  setSectionsData: React.Dispatch<React.SetStateAction<any>>;
-}) => {
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm();
-  return (
-    <CardWithSeparator
-      titleComponent={
-        <CardWithSeparatorTitleText>Medications</CardWithSeparatorTitleText>
-      }
-      cardClassName="mb-8"
-    >
-      <form>
-        <div className="grid grid-cols-2 gap-9">
-          <TextField
-            name="blood_pressure"
-            label="Blood pressure"
-            placeholder="120/80 mmHg"
-            register={register}
-          />
-          <TextField
-            name="body_temperature"
-            label="Body Temperature"
-            placeholder="98"
-            register={register}
-          />
-          <TextField
-            name="body_weight"
-            label="Body Weight"
-            placeholder="70"
-            register={register}
-          />
-          <TextField
-            name="diastolic_bp"
-            label="Diastolic BP"
-            placeholder="80"
-            register={register}
-          />
-          <TextField
-            name="systolic_bp"
-            label="Systolic BP"
-            placeholder="120"
-            register={register}
-          />
-          <TextField
-            name="peripheral_oxygen_saturation"
-            label="Peripheral Oxygen Saturation"
-            placeholder="98"
-            register={register}
-          />
-          <TextField
-            name="respiratory_rate"
-            label="Respiratory Rate"
-            placeholder="16"
-            register={register}
-          />
-          <TextField
-            name="pulse"
-            label="Pulse"
-            placeholder="72"
-            register={register}
-          />
-        </div>
-      </form>
-    </CardWithSeparator>
-  );
-};
-const SymptomsForm = ({
-  setSectionsData,
-}: {
-  setSectionsData: React.Dispatch<React.SetStateAction<any>>;
-}) => {
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm();
-  return (
-    <CardWithSeparator
-      titleComponent={
-        <CardWithSeparatorTitleText>Symptoms</CardWithSeparatorTitleText>
-      }
-      cardClassName="mb-8"
-    >
-      <form>
-        <div className="grid grid-cols-2 gap-9">
-          <TextField
-            name="name"
-            label="Name"
-            placeholder="Cough"
-            register={register}
-          />
-          <TextField
-            name="severity"
-            label="Severity"
-            placeholder="8"
-            register={register}
-          />
-          <TextField
-            name="details"
-            label="Details"
-            placeholder="Persistent dry cough without phlegm"
-            register={register}
-          />
-          <TextField
-            name="since"
-            label="Since"
-            placeholder="14 days / 2024-03-31"
-            register={register}
-          />
-        </div>
-      </form>
-    </CardWithSeparator>
-  );
-};
 
 const Appointment = ({
   params,
@@ -258,10 +84,14 @@ const Appointment = ({
       setSectionsToBeAdded(sectionsToBeAdded.filter((s) => s !== section));
     }
   };
-  const [sectionsData, setSectionsData] = useState<any>({
-    medications: {},
-    symptoms: {},
-    vitals: {},
+  const [sectionsData, setSectionsData] = useState<{
+    medications: any[];
+    symptoms: any[];
+    vitals: any[];
+  }>({
+    medications: [],
+    symptoms: [],
+    vitals: [],
   });
   const [isRecordingModalOpen, setIsRecordingModalOpen] = useState(false);
   const [response, setResponse] = useState<ApiResponse | null>(null);
@@ -353,9 +183,7 @@ const Appointment = ({
                   Medications
                 </label>
               </div>
-              {sectionsToBeAdded.includes("medications") && (
-                <MedicationsForm setSectionsData={setSectionsData} />
-              )}
+              {sectionsToBeAdded.includes("medications") && <MedicationsForm />}
               <div className="flex gap-2 p-4 rounded-md bg-white items-center">
                 <Checkbox
                   id="symptoms"
@@ -367,9 +195,7 @@ const Appointment = ({
                   Symptoms
                 </label>
               </div>
-              {sectionsToBeAdded.includes("symptoms") && (
-                <SymptomsForm setSectionsData={setSectionsData} />
-              )}
+              {sectionsToBeAdded.includes("symptoms") && <SymptomsForm />}
               <div className="flex gap-2 p-4 rounded-md bg-white items-center">
                 <Checkbox
                   id="vitals"
@@ -381,9 +207,7 @@ const Appointment = ({
                   Vitals
                 </label>
               </div>
-              {sectionsToBeAdded.includes("vitals") && (
-                <VitalsForm setSectionsData={setSectionsData} />
-              )}
+              {sectionsToBeAdded.includes("vitals") && <VitalsForm />}
             </div>
           </form>
         </div>

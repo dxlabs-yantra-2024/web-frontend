@@ -134,10 +134,7 @@ const Appointment = ({
                 <RxAvatar size={28} className="text-gray-700" />
               </div>
               <div>
-                <StatCard
-                  label="Username"
-                  value={`Registered since ${"Date"}`}
-                />
+                <StatCard value={appointment?.data?.user?.name} />
               </div>
             </div>
             <div className="flex gap-2">

@@ -274,6 +274,36 @@ export const API = {
           },
         }
       ),
+    addMedication: (medication: any, appointmentId: any, token: any) =>
+      requests.post(
+        `/workspaces/appointments/${appointmentId}/medications`,
+        medication,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      ),
+    addVitals: (vitals: any, appointmentId: any, token: any) =>
+      requests.post(
+        `/workspaces/appointments/${appointmentId}/vitals`,
+        vitals,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      ),
+    addSymptoms: (symptoms: any, appointmentId: any, token: any) =>
+      requests.post(
+        `/workspaces/appointments/${appointmentId}/symptoms`,
+        symptoms,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      ),
   },
   cases: {
     createCase: (
