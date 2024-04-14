@@ -46,16 +46,7 @@ export default function Home() {
       }
     );
   };
-  const handleSubmitForm = (data: any) => {
-    // createDoctor(data, {
-    //   onSuccess: (data: any) => {
-    //     const token = data.data.token;
-    //     router.push(`/getOTP/otp?token=${token}`);
-
-    //     // console.log(data);
-    //   },
-    // });
-
+  
     reset();
   };
   return (

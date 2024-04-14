@@ -101,7 +101,6 @@ const Dashboard = () => {
     useGetPatientsByWorkspaceID({
       workspaceID,
     });
-  console.log({ patients });
 
   const patientsArray = patients?.data
     ?.filter((patient: any) => !!patient)

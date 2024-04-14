@@ -9,14 +9,8 @@ import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 
 export default function Home() {
-  const { data: currentDoctor } = useGetCurrentDoctor();
   const router = useRouter();
-  useEffect(() => {
-    console.log(currentDoctor);
-    if (currentDoctor) {
-      router.push("/dashboard");
-    }
-  }, [currentDoctor, router]);
+
   const { mutate: userLogin } = useUserLogin();
   const {
     register,

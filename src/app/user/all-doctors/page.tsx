@@ -2,69 +2,71 @@
 
 import { Button } from "@/components/Button";
 import { DataTable } from "@/components/Table/Table";
+import { useGetAllPatientAppointments } from "@/queries/useGetAllPatientAppointments";
+import { useGetAllPatientDoctors } from "@/queries/useGetAllPatientDoctors";
 import { useGetAppointmentsByWorkspaceID } from "@/queries/useGetAppointments";
 import { TAppointment } from "@/types/appointment";
 import { AppointmentStatus, AppointmentType } from "@/types/case";
 import { ColumnDef } from "@tanstack/react-table";
+import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
 import { LuLoader2 } from "react-icons/lu";
 import { RxCaretSort } from "react-icons/rx";
 
 type TAppointmentRow = {
   id: string;
-  appointmentId: string;
-  start_time: string;
-  end_time: string;
-  userID: string;
-  status: AppointmentStatus;
-  type: AppointmentType;
+  name: string;
+  email: string;
+  mobileNumber: AppointmentStatus;
+  status: AppointmentType;
 };
 
 const columns: ColumnDef<TAppointmentRow>[] = [
   {
-    accessorKey: "start_time",
+    accessorKey: "name",
     header: ({ column }) => {
       return (
         <Button
           variant="ghost"
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
-          Start time
+          Name
           <RxCaretSort className="ml-2 h-4 w-4" />
         </Button>
       );
     },
-    cell: ({ row }) => <div>{row.getValue("start_time")}</div>,
+    cell: ({ row }) => <div>{row.getValue("name")}</div>,
   },
   {
-    accessorKey: "end_time",
+    accessorKey: "email",
     header: ({ column }) => {
       return (
         <Button
           variant="ghost"
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
-          End time
+          Email
           <RxCaretSort className="ml-2 h-4 w-4" />
         </Button>
       );
     },
-    cell: ({ row }) => <div>{row.getValue("end_time")}</div>,
+    cell: ({ row }) => <div>{row.getValue("email")}</div>,
   },
+
   {
-    accessorKey: "reason",
+    accessorKey: "mobileNumber",
     header: ({ column }) => {
       return (
         <Button
           variant="ghost"
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
-          Reason
+          Mobile Number
           <RxCaretSort className="ml-2 h-4 w-4" />
         </Button>
       );
     },
-    cell: ({ row }) => <div>{row.getValue("reason")}</div>,
+    cell: ({ row }) => <div>{row.getValue("mobileNumber")}</div>,
   },
   {
     accessorKey: "status",
@@ -82,43 +84,42 @@ const columns: ColumnDef<TAppointmentRow>[] = [
     cell: ({ row }) => <div>{row.getValue("status")}</div>,
   },
   {
-    accessorKey: "type",
+    accessorKey: "action",
     header: ({ column }) => {
       return (
         <Button
           variant="ghost"
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
-          Type
+          View More
           <RxCaretSort className="ml-2 h-4 w-4" />
         </Button>
       );
     },
-    cell: ({ row }) => <div>{row.getValue("type")}</div>,
+    cell: ({ row }) => (
+      <Link
+        className="bg-primaryGreen p-2 rounded-md text-white"
+        href={`/user/doctor-by-id/${row.getValue("id")}`}
+      >
+        View More
+      </Link>
+    ),
   },
 ];
 
 const Dashboard = () => {
-  const searchParams = useSearchParams();
-  const workspaceID = searchParams.get("workspace");
   const { data: appointments, isLoading: isAppointmentsLoading } =
-    useGetAppointmentsByWorkspaceID({
-      workspaceID: workspaceID ?? "",
-    });
+    useGetAllPatientDoctors();
   const route = useRouter();
-  const appointmentsArray = appointments?.data
-    ?.filter((appointment: any) => appointment?.appointment)
-    .map((appointment: any) => {
-      return {
-        appointmentId: appointment.appointmentId,
-        id: appointment.appointment.id,
-        start_time: appointment.appointment.start_time,
-        end_time: appointment.appointment.end_time,
-        reason: appointment.appointment.reason,
-        status: appointment.appointment.status,
-        type: appointment.appointment.type,
-      };
-    });
+  const appointmentsArray = appointments?.data?.map((appointment: any) => {
+    return {
+      id: appointment.id,
+      name: appointment.name,
+      email: appointment.email,
+      mobileNumber: appointment.mobile_number,
+      status: appointment.status,
+    };
+  });
   return (
     <div className="w-full p-4">
       <DataTable
@@ -128,9 +129,7 @@ const Dashboard = () => {
         filterField="reason"
         filterPlaceholder="Filter by patient name"
         onRowClick={(row) => {
-          route.push(
-            `/appointments/appointment/${row.appointmentId}${workspaceID ? "?workspace=" + workspaceID : ""}`
-          );
+          route.push(`/user/doctor-by-id/${row.id}`);
         }}
       />
     </div>

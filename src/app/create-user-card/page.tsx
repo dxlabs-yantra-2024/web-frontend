@@ -47,7 +47,6 @@ const Dashboard = () => {
       _txnId ?? "",
       _token ?? ""
     );
-    console.log(data);
     const finalToken = data.token;
     localStorage.setItem("finalToken", finalToken);
     setFinalToken(finalToken);
@@ -56,7 +55,6 @@ const Dashboard = () => {
   const getCard = async () => {
     const _finalToken = localStorage.getItem("finalToken");
     const _data = await API.abdm.getCard(_finalToken ?? "");
-    console.log("getcard", _data);
     let base64ImageString = Buffer.from(_data.data, "binary").toString(
       "base64"
     );
@@ -73,16 +71,8 @@ const Dashboard = () => {
     link.download = "_ABDM_Card.pdf";
     link.click();
     localStorage.setItem("cardToken", _data.abdmToken);
-    console.log(_data);
   };
 
-  useEffect(() => {
-    console.log({
-      finalToken,
-      healthID,
-      token,
-    });
-  }, [finalToken, healthID, token]);
   const handleFormSubmit = async (formData: any) => {
     if (step === 0) {
       await generateOtp(formData.mobileNumber);
@@ -91,7 +81,6 @@ const Dashboard = () => {
       await verifyOtp(formData.otp);
       await genAuthToken();
       const data = await getCard();
-      console.log(data);
     }
   };
   return (

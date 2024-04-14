@@ -2,6 +2,7 @@
 
 import { Button } from "@/components/Button";
 import { DataTable } from "@/components/Table/Table";
+import { useGetAllPatientAppointments } from "@/queries/useGetAllPatientAppointments";
 import { useGetAppointmentsByWorkspaceID } from "@/queries/useGetAppointments";
 import { TAppointment } from "@/types/appointment";
 import { AppointmentStatus, AppointmentType } from "@/types/case";
@@ -11,11 +12,8 @@ import { LuLoader2 } from "react-icons/lu";
 import { RxCaretSort } from "react-icons/rx";
 
 type TAppointmentRow = {
-  id: string;
-  appointmentId: string;
   start_time: string;
   end_time: string;
-  userID: string;
   status: AppointmentStatus;
   type: AppointmentType;
 };
@@ -51,21 +49,7 @@ const columns: ColumnDef<TAppointmentRow>[] = [
     },
     cell: ({ row }) => <div>{row.getValue("end_time")}</div>,
   },
-  {
-    accessorKey: "reason",
-    header: ({ column }) => {
-      return (
-        <Button
-          variant="ghost"
-          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-        >
-          Reason
-          <RxCaretSort className="ml-2 h-4 w-4" />
-        </Button>
-      );
-    },
-    cell: ({ row }) => <div>{row.getValue("reason")}</div>,
-  },
+
   {
     accessorKey: "status",
     header: ({ column }) => {
@@ -99,26 +83,18 @@ const columns: ColumnDef<TAppointmentRow>[] = [
 ];
 
 const Dashboard = () => {
-  const searchParams = useSearchParams();
-  const workspaceID = searchParams.get("workspace");
   const { data: appointments, isLoading: isAppointmentsLoading } =
-    useGetAppointmentsByWorkspaceID({
-      workspaceID: workspaceID ?? "",
-    });
+    useGetAllPatientAppointments();
   const route = useRouter();
-  const appointmentsArray = appointments?.data
-    ?.filter((appointment: any) => appointment?.appointment)
-    .map((appointment: any) => {
-      return {
-        appointmentId: appointment.appointmentId,
-        id: appointment.appointment.id,
-        start_time: appointment.appointment.start_time,
-        end_time: appointment.appointment.end_time,
-        reason: appointment.appointment.reason,
-        status: appointment.appointment.status,
-        type: appointment.appointment.type,
-      };
-    });
+  const appointmentsArray = appointments?.data?.map((appointment: any) => {
+    return {
+      id: appointment.id,
+      start_time: appointment.start_time,
+      end_time: appointment.end_time,
+      status: appointment.status,
+      type: appointment.type,
+    };
+  });
   return (
     <div className="w-full p-4">
       <DataTable
@@ -128,9 +104,9 @@ const Dashboard = () => {
         filterField="reason"
         filterPlaceholder="Filter by patient name"
         onRowClick={(row) => {
-          route.push(
-            `/appointments/appointment/${row.appointmentId}${workspaceID ? "?workspace=" + workspaceID : ""}`
-          );
+          // route.push(
+          //   `/appointments/appointment/${row.appointmentId}${workspaceID ? "?workspace=" + workspaceID : ""}`
+          // );
         }}
       />
     </div>

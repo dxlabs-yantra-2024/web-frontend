@@ -1,15 +1,17 @@
 "use client";
 import { Header } from "@/components/Header/Header";
 import { TextField } from "@/components/TextField";
-import useCreateDoctor from "@/mutations/useCreateDoctor";
-import { TDoctor } from "@/types/doctor";
+import useUserLogin from "@/mutations/useUserLogin";
+import { useGetCurrentDoctor } from "@/queries/useGetCurrentDoctor";
 import Image from "next/image";
-// import { useRouter } from "next/router";
-import { useForm } from "react-hook-form";
 import { useRouter } from "next/navigation";
-export default function Home() {
-  const { mutate: createDoctor } = useCreateDoctor();
+import { useEffect } from "react";
+import { useForm } from "react-hook-form";
+
+export default function UserLogin() {
   const router = useRouter();
+
+  const { mutate: userLogin } = useUserLogin("Patient");
   const {
     register,
     handleSubmit,
@@ -17,14 +19,19 @@ export default function Home() {
     reset,
   } = useForm();
 
-  const handleSubmitForm = (data: TDoctor) => {
-    createDoctor(data, {
-      onSuccess: (data: any) => {
-        const token = data.data.token;
-        router.push(`/getOTP?token=${token}`);
+  const login = (data: any) => {
+    userLogin(
+      {
+        email: data.email,
+        password: data.password,
       },
-    });
-    reset();
+      {
+        onSuccess: (data: any) => {
+          localStorage.setItem("userLoginToken", data.data.token);
+          router.push("/user/all-doctors");
+        },
+      }
+    );
   };
   return (
     <div className="h-[100%] flex flex-col ">
@@ -47,35 +54,21 @@ export default function Home() {
               </div>
             </div>
           </div>
-          <form
-            onSubmit={handleSubmit((data) => handleSubmitForm(data as TDoctor))}
-          >
+          <form onSubmit={handleSubmit((data) => login(data))}>
             <div className="flex flex-col gap-12 items-center">
               <div className="flex flex-col gap-3 justify-center">
                 <div className="flex flex-col gap-7 ">
                   <TextField
-                    iconName="lock"
-                    placeholder="Name"
-                    register={register}
-                    name="name"
-                  />
-                  <TextField
-                    iconName="lock"
-                    placeholder="Username"
-                    register={register}
-                    name="username"
-                  />
-                  <TextField
                     iconName="message"
                     placeholder="Email Address"
-                    register={register}
                     name="email"
+                    register={register}
                   />
                   <TextField
                     iconName="lock"
                     placeholder="Password"
-                    register={register}
                     name="password"
+                    register={register}
                     type="password"
                   />
                 </div>
@@ -83,10 +76,7 @@ export default function Home() {
                   Recover Password
                 </button>
               </div>
-              <button
-                className="p-4 bg-primaryGreen rounded-12 w-fit text-white"
-                type="submit"
-              >
+              <button className="p-4 bg-primaryGreen rounded-12 w-fit text-white">
                 Login
               </button>
             </div>
@@ -96,5 +86,3 @@ export default function Home() {
     </div>
   );
 }
-
-// "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2MTliODc4MzcxNjJhOTY5NjdhZDkzNyIsInJvbGUiOiJwZW5kaW5nIiwiaWF0IjoxNzEyOTYxNjU2LCJleHAiOjE3MTM4MjU2NTZ9.0zjcnevsO9chO3vN2zWR5FrZ0RBHjx6wKrZ2Hbr4fgM",

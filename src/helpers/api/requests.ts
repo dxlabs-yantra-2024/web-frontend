@@ -103,6 +103,103 @@ export const API = {
           Authorization: `Bearer ${token}`,
         },
       }),
+    askMedbot: (prompt: string, token: string) =>
+      requests.post(
+        "/research/generate-research",
+        {
+          message: prompt,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      ),
+  },
+  patients: {
+    getDoctorByID: (id: string, token: string) =>
+      requests.get(`/users/doctors/${id}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }),
+    createDoctor: ({
+      name,
+      username,
+      email,
+      password,
+    }: Pick<TDoctor, "name" | "username" | "email" | "password">) =>
+      requests.post("/doctors/signup", {
+        email,
+        name,
+        password,
+        username,
+      }),
+    getOTP: (mobileNumber: string, token: string) =>
+      requests.post(
+        "/doctors/getotp",
+        {
+          mobile_number: mobileNumber,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      ),
+    verifyOTP: (otp: number, token: string) =>
+      requests.post(
+        "/doctors/verifyotp",
+        {
+          otp,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      ),
+    login: (email: string, password: string) =>
+      requests.post("/users/login", {
+        email,
+        password,
+      }),
+    getMe: (token: string) =>
+      requests.get("/doctors/me", {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }),
+    askMedbot: (prompt: string, token: string) =>
+      requests.post(
+        "/research/generate-research",
+        {
+          message: prompt,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      ),
+    getAllAppointments: (token: string) =>
+      requests.get("/users/appointments", {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }),
+    getAllDoctors: (token: string) =>
+      requests.get("/users/doctors", {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }),
+    bookAppointment: (appointment: any, token: string) =>
+      requests.post("/users/book/appointment", appointment, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }),
   },
   workspaces: {
     createWorkspace: (workspaceName: TWorkspace["name"], token: string) =>

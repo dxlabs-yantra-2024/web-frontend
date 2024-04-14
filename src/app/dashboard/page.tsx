@@ -1,20 +1,7 @@
 "use client";
 
-import useGenerateABDMOTP from "@/mutations/useGenerateABDMOtp";
-
 const Dashboard = () => {
-  const { mutate: generateABDMOTP } = useGenerateABDMOTP();
-  return (
-    <div className="">
-      <button
-        onClick={() => {
-          generateABDMOTP("587766108384");
-        }}
-      >
-        asd
-      </button>
-    </div>
-  );
+  return <>Dashboard</>;
 };
 
 export default Dashboard;

@@ -1,0 +1,1 @@
+export { PatientsSidebar } from "./PatientsSidebar";

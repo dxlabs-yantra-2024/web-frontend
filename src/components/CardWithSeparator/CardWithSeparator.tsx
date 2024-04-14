@@ -15,9 +15,11 @@ const CardWithSeparator = ({
 }) => {
   return (
     <div className={`bg-white p-5 flex flex-col rounded-12 ${cardClassName}`}>
-      <div className="flex flex-col gap-2">
+      <div className="flex flex-col gap-2 text-lg">
         {titleComponent}
-        {subtext && <p className="text-sm text-gray-400">{subtext}</p>}
+        {subtext && (
+          <p className=" text-gray-400 max-w-[75%] text-sm">{subtext}</p>
+        )}
       </div>
       <div className="w-full h-[1px] border border-[#E1E2E9] my-3" />
       {children}

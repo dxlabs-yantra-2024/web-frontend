@@ -5,9 +5,16 @@ type TextFieldProps = {
   iconName?: string;
   name: string;
   register?: any;
+  inputClassName?: string;
 } & React.ComponentProps<"input">;
 
-const TextField = ({ label, iconName, register, ...props }: TextFieldProps) => {
+const TextField = ({
+  label,
+  iconName,
+  register,
+  inputClassName,
+  ...props
+}: TextFieldProps) => {
   return (
     <div className="flex flex-col gap-2 ">
       {label && <label className="text-primaryGreen text-sm">{label}</label>}
@@ -23,7 +30,7 @@ const TextField = ({ label, iconName, register, ...props }: TextFieldProps) => {
           </div>
         )}
         <input
-          className={`py-2 px-4 min-w-[375px] border border-textFieldBorder rounded-[8px] ${iconName ? "pl-10 " : ""}`}
+          className={`py-2 px-4 min-w-[375px] border border-textFieldBorder rounded-[8px] ${iconName ? "pl-10 " : ""} ${inputClassName}`}
           {...register?.(props.name)}
           {...props}
         />

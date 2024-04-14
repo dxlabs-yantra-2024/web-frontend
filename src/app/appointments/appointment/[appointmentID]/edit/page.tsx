@@ -1,6 +1,6 @@
 "use client";
 import * as DropdownMenu from "@radix-ui/react-dropdown-menu";
-
+import * as Dialog from "@radix-ui/react-dialog";
 const ADDABLE_SECTIONS = ["Medications", "Vitals", "Symptoms"];
 
 import {
@@ -16,7 +16,39 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { IoClose } from "react-icons/io5";
 import { Checkbox } from "@/components/Checkbox";
+import { RecordSymptoms } from "@/components/RecordSymptoms";
+import { ENV } from "@/constants/env";
+import { AudioRecorder } from "react-audio-voice-recorder";
+import { LuLoader2 } from "react-icons/lu";
 
+export interface ApiResponse {
+  status: boolean;
+  message: string;
+  transcription: string;
+  diagnosis: Diagnosis;
+}
+
+export interface Diagnosis {
+  index: number;
+  message: DiagnosisMessage;
+  logprobs: any;
+  finish_reason: string;
+}
+
+export interface DiagnosisMessage {
+  role: string;
+  content: string;
+}
+
+export interface DiagnosisContent {
+  conditions: Condition[];
+}
+
+export interface Condition {
+  name: string;
+  probability: string;
+  insights: string;
+}
 const MedicationsForm = ({
   setSectionsData,
 }: {
@@ -231,43 +263,49 @@ const Appointment = ({
     symptoms: {},
     vitals: {},
   });
+  const [isRecordingModalOpen, setIsRecordingModalOpen] = useState(false);
+  const [response, setResponse] = useState<ApiResponse | null>(null);
+  const [isAnalyzingText, setIsAnalyzingText] = useState(false);
+  const onRecordingComplete = async (audioBlob: Blob) => {
+    setIsAnalyzingText(true);
+    const formData = new FormData();
+    const audioFile = new File([audioBlob], "audio.webm", {
+      type: "audio/webm",
+    });
+    formData.append("file", audioFile);
+    try {
+      const response = await fetch(
+        `${ENV.API_ROOT}/workspaces/appointments/${params.appointmentID ?? ""}/audio`,
+        {
+          method: "PATCH",
+          body: formData,
+        }
+      );
+      const data: ApiResponse = await response.json();
+      if (data.diagnosis.message.content) {
+        data.diagnosis.message.content = JSON.parse(
+          data.diagnosis.message.content
+        );
+      }
+      setResponse(data);
+    } catch (error) {
+      setResponse(null);
+    } finally {
+      setIsAnalyzingText(false);
+    }
+  };
+  const getConditionPillColor = (probability: string) => {
+    const num = probability.replace("%", "");
+    const perc = Number(num);
+    if (perc >= 80) {
+      return "bg-green-500";
+    }
+    if (perc >= 50) {
+      return "bg-yellow-500";
+    }
+    return "bg-red-500";
+  };
   return (
-    // <div className="">
-    //   <form
-    //     className="flex flex-col gap-4 items-start"
-    //     onSubmit={handleSubmit(handleFormSubmit)}
-    //   >
-    //     <TextField name="advices" placeholder="Advices" register={register} />
-    //     <TextField
-    //       name="diagnosis"
-    //       placeholder="Diagnosis"
-    //       register={register}
-    //     />
-    //     <TextField
-    //       name="chief_complaint"
-    //       placeholder="Chief Complaint"
-    //       register={register}
-    //     />
-    //     <TextField
-    //       name="diff_diagnosis"
-    //       placeholder="Diff Diagnosis"
-    //       register={register}
-    //     />
-    //     <TextField
-    //       name="examination_plan"
-    //       placeholder="Examination Plan"
-    //       register={register}
-    //     />
-    //     <TextField name="history" placeholder="History" register={register} />
-    //     <TextField
-    //       name="management_plan"
-    //       placeholder="Management Plan"
-    //       register={register}
-    //     />
-    //     <Button onClick={handleSubmit(handleFormSubmit)}>Submit</Button>
-    //   </form>
-    // </div>
-
     <div className="p-4">
       <div className="grid grid-cols-6 gap-5">
         <div className="col-span-4">
@@ -278,9 +316,21 @@ const Appointment = ({
             <div className="flex flex-col gap-6">
               <CardWithSeparator
                 titleComponent={
-                  <CardWithSeparatorTitleText>
-                    Chief Complaints
-                  </CardWithSeparatorTitleText>
+                  <div className="flex w-full justify-between">
+                    <CardWithSeparatorTitleText>
+                      Chief Complaints
+                    </CardWithSeparatorTitleText>
+
+                    <AudioRecorder
+                      onRecordingComplete={onRecordingComplete}
+                      audioTrackConstraints={{
+                        noiseSuppression: true,
+                        echoCancellation: true,
+                      }}
+                      downloadOnSavePress={false}
+                      downloadFileExtension="webm"
+                    />
+                  </div>
                 }
               >
                 <textarea
@@ -338,26 +388,63 @@ const Appointment = ({
           </form>
         </div>
         <div className="col-span-2">
-          <div className=" flex flex-col gap-6">
+          <div className=" flex flex-col gap-6 sticky top-4">
             <CardWithSeparator
               titleComponent={
                 <CardWithSeparatorTitleText>
                   Differential Diagnosis
                 </CardWithSeparatorTitleText>
               }
-              cardClassName="h-[405px]"
+              cardClassName="min-h-[405px]"
             >
-              {null}
-            </CardWithSeparator>
-            <CardWithSeparator
-              titleComponent={
-                <CardWithSeparatorTitleText>
-                  Management Plan
-                </CardWithSeparatorTitleText>
-              }
-              cardClassName="h-[309px]"
-            >
-              {null}
+              {!isAnalyzingText && response && (
+                <div>
+                  <p className="text-sm mb-4">
+                    <strong>Transcription:</strong> {response.transcription}
+                  </p>
+                  <div className="space-y-3">
+                    {(
+                      response.diagnosis.message
+                        .content as unknown as DiagnosisContent
+                    ).conditions?.map((condition: Condition, index: number) => (
+                      <div
+                        key={index}
+                        className="flex justify-between items-center p-2 border-b"
+                      >
+                        <div className="flex-1 flex flex-col gap-2">
+                          <div className="flex justify-between">
+                            <h4 className="text-lg font-medium">
+                              {condition.name}
+                            </h4>
+                            <span
+                              className={`px-3 py-1 rounded-full text-white text-xs font-bold flex items-center ${getConditionPillColor(
+                                condition.probability
+                              )}`}
+                            >
+                              {condition.probability}
+                            </span>
+                          </div>
+                          <p className="text-sm text-gray-600">
+                            {condition.insights}
+                          </p>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
+              {(isAnalyzingText || !response) && (
+                <p className="text-sm text-gray-500">
+                  Response will appear here after upload & analysis.
+                </p>
+              )}
+              {isAnalyzingText && (
+                <div className="my-8 w-full flex items-center justify-center">
+                  <div className="animate-spin">
+                    <LuLoader2 size={48} className="text-primaryGreen" />
+                  </div>
+                </div>
+              )}
             </CardWithSeparator>
           </div>
         </div>
