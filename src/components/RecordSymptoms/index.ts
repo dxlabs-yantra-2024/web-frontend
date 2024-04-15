@@ -1,1 +1,0 @@
-export { RecordSymptoms } from "./RecordSymptoms";

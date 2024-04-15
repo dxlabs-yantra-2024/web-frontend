@@ -1,26 +1,19 @@
 "use client";
-import * as DropdownMenu from "@radix-ui/react-dropdown-menu";
-import * as Dialog from "@radix-ui/react-dialog";
-const ADDABLE_SECTIONS = ["Medications", "Vitals", "Symptoms"];
 
 import {
   CardWithSeparator,
   CardWithSeparatorTitleText,
 } from "@/components/CardWithSeparator";
-import { TextField } from "@/components/TextField";
 import useEditAppointment, {
   TEditAppointment,
 } from "@/mutations/useEditAppointment";
 import { useGetAppointmentByID } from "@/queries/useGetAppointmentByID";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
-import { IoClose } from "react-icons/io5";
 import { Checkbox } from "@/components/Checkbox";
-import { RecordSymptoms } from "@/components/RecordSymptoms";
 import { ENV } from "@/constants/env";
 import { AudioRecorder } from "react-audio-voice-recorder";
 import { LuLoader2 } from "react-icons/lu";
-import useEditAppointmentFields from "@/mutations/useEditAppointmentFields";
 import {
   MedicationsForm,
   SymptomsForm,
@@ -153,6 +146,9 @@ const Appointment = ({
 
                     <AudioRecorder
                       onRecordingComplete={onRecordingComplete}
+                      classes={{
+                        AudioRecorderDiscardClass: "display-none",
+                      }}
                       audioTrackConstraints={{
                         noiseSuppression: true,
                         echoCancellation: true,
