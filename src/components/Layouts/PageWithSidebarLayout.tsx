@@ -4,8 +4,8 @@ import { usePathname } from "next/navigation";
 import { GoHomeFill } from "react-icons/go";
 import { IoNotifications } from "react-icons/io5";
 import { WorkspaceDialog } from "../WorkspaceDialog/WorkspaceDialog";
-import { Suspense } from "react";
 import { RxAvatar } from "react-icons/rx";
+import { NoWorkspaceWarning } from "@/components/NoWorkspaceWarning";
 
 const BREADCRUMB_LABEL: Record<string, string> = {
   appointments: "Appointments",
@@ -22,6 +22,7 @@ const PageWithSidebarLayout = ({ children }: { children: React.ReactNode }) => {
       <div className="fixed top-0 h-[100vh]">
         <Sidebar />
       </div>
+      <NoWorkspaceWarning />
       <div className="flex-grow ml-[246px]">
         <div className="flex flex-col">
           <div className="flex flex-col bg-white">
@@ -45,9 +46,7 @@ const PageWithSidebarLayout = ({ children }: { children: React.ReactNode }) => {
             </div>
           </div>
 
-          <div>
-            <Suspense>{children}</Suspense>
-          </div>
+          <div>{children}</div>
         </div>
       </div>
     </div>

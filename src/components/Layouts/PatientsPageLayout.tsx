@@ -1,10 +1,7 @@
 "use client";
-import { Sidebar } from "@/components/Sidebar/Sidebar";
 import { usePathname } from "next/navigation";
 import { GoHomeFill } from "react-icons/go";
 import { IoNotifications } from "react-icons/io5";
-import { WorkspaceDialog } from "../WorkspaceDialog/WorkspaceDialog";
-import { Suspense } from "react";
 import { RxAvatar } from "react-icons/rx";
 import { PatientsSidebar } from "../Sidebar";
 
@@ -29,9 +26,6 @@ const PatientsPageLayout = ({ children }: { children: React.ReactNode }) => {
             <div className="px-5 py-3 flex justify-between border-b-2 border-gray-200 items-center ">
               <h1 className="text-20 font-semibold">Dashboard</h1>
               <div className="flex gap-5 items-center">
-                <div>
-                  <WorkspaceDialog />
-                </div>
                 <IoNotifications className="text-primaryGreen" size={20} />
                 <RxAvatar size={20} />
               </div>
@@ -46,9 +40,7 @@ const PatientsPageLayout = ({ children }: { children: React.ReactNode }) => {
             </div>
           </div>
 
-          <div>
-            <Suspense>{children}</Suspense>
-          </div>
+          <div>{children}</div>
         </div>
       </div>
     </div>

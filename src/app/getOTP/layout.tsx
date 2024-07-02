@@ -1,8 +1,8 @@
-"use client";
-import { Suspense } from "react";
+import { getPageMetadata } from "@/helpers/getPageMetadata";
+export const metadata = getPageMetadata("Doctors | Get OTP");
 
 const Layout = ({ children }: { children: React.ReactNode }) => {
-  return <Suspense>{children}</Suspense>;
+  return <>{children}</>;
 };
 
 export default Layout;

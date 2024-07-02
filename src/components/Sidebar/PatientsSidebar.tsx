@@ -3,12 +3,9 @@ import Image from "next/image";
 import Logo from "../../../public/assets/logo.svg";
 import { usePathname, useSearchParams } from "next/navigation";
 import Link from "next/link";
-import { IoCreateOutline, IoLogOut, IoSettingsOutline } from "react-icons/io5";
+import { IoLogOut } from "react-icons/io5";
 import { LuLayoutDashboard } from "react-icons/lu";
-import { CiFolderOn } from "react-icons/ci";
-import { MdOutlinePeopleAlt } from "react-icons/md";
 import { PiBagSimple } from "react-icons/pi";
-import { Suspense } from "react";
 
 type SidebarItemType = {
   label: string;
@@ -61,7 +58,9 @@ const SidebarItem = (props: SidebarItemType) => {
   return (
     <Link
       href={workspace ? `${href}?workspace=${workspace}` : href}
-      className={`${props.className} flex items-center gap-4 px-4 ${isActive ? "bg-primaryGreen py-5 text-white rounded-12" : "text-black50"}`}
+      className={`${props.className} flex items-center gap-4 px-4 ${
+        isActive ? "bg-primaryGreen py-5 text-white rounded-12" : "text-black50"
+      }`}
     >
       {icon}
       <p>{label}</p>
@@ -72,23 +71,21 @@ const SidebarItem = (props: SidebarItemType) => {
 const PatientsSidebar = () => {
   return (
     <div className="pt-5 pb-8 px-6 gap-12 h-full flex flex-col bg-white">
-      <Suspense>
-        <Image src={Logo} height={58} alt="logo" />
-        <div className="flex-grow flex flex-col justify-between">
-          <div className="flex flex-col gap-7">
-            {SIDEBAR_ITEMS.map((item) => {
-              return <SidebarItem key={item.label} {...item} />;
-            })}
-          </div>
-          <SidebarItem
-            type="button"
-            onClick={() => {}}
-            icon={<IoLogOut color="#CC5F5F" />}
-            label="Logout"
-            className="text-[#CC5F5F]"
-          />
+      <Image src={Logo} height={58} alt="logo" />
+      <div className="flex-grow flex flex-col justify-between">
+        <div className="flex flex-col gap-7">
+          {SIDEBAR_ITEMS.map((item) => {
+            return <SidebarItem key={item.label} {...item} />;
+          })}
         </div>
-      </Suspense>
+        <SidebarItem
+          type="button"
+          onClick={() => {}}
+          icon={<IoLogOut color="#CC5F5F" />}
+          label="Logout"
+          className="text-[#CC5F5F]"
+        />
+      </div>
     </div>
   );
 };

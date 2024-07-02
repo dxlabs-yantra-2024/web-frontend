@@ -20,6 +20,7 @@ import {
 } from "@/types/case";
 import { TEditAppointment } from "@/mutations/useEditAppointment";
 import { TAppointment } from "@/types/appointment";
+import { TUser } from "@/types/user";
 const instance = axios.create();
 
 export const requests = {
@@ -54,6 +55,15 @@ export const requests = {
 };
 
 export const API = {
+  users: {
+    createUser: ({ name, username, email, password }: TUser) =>
+      requests.post("/users/signup", {
+        email,
+        name,
+        password,
+        username,
+      }),
+  },
   doctors: {
     getDoctorByID: (id: string) => requests.get(`/doctors/${id}`),
     createDoctor: ({

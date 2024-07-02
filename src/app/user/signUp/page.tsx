@@ -1,5 +1,5 @@
-const Index = () => {
-  return <></>;
-};
-
-export default Index;
+"use client";
+import { Signup } from "@/components/Signup";
+export default function Home() {
+  return <Signup type="user" />;
+}
