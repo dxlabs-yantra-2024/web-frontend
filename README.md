@@ -76,6 +76,8 @@ The Sustainable Development Goals (SDGs) aim to ensure healthy lives and promote
 - Provides response containing the solutions, follow up questions and resources that are relevant.
 
 ![MedBot](website-preview/doctor/doctor-medbot.png)
+![MedBot1](website-preview/doctor/doctor-medbot-1.png)
+![MedBot2](website-preview/doctor/doctor-medbot-2.png)
 
 **Create ABDM**:
 
