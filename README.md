@@ -1,36 +1,115 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Problem Statement
 
-## Getting Started
+**Improving Access to Quality Healthcare Services through Digital Health Solutions**
 
-First, run the development server:
+The Sustainable Development Goals (SDGs) aim to ensure healthy lives and promote well-being for all at all ages. However, many communities still face challenges in accessing quality healthcare services due to various factors, such as geographical barriers, inadequate infrastructure, and lack of resources. This project aims to address these challenges by developing a comprehensive digital health solution that leverages emerging technologies to improve access to healthcare services and enhance the overall quality of care.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+# Solution
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+**Healthcare Provider Dashboard**: A user-friendly dashboard for healthcare professionals, enabling them to efficiently track appointments, manage patient cases, and access comprehensive patient records. This component aims to streamline healthcare delivery processes, reducing administrative burdens and improving overall efficiency.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+**Differential Diagnosis Assistant**: An integrated intelligent assistant that supports healthcare professionals in making accurate differential diagnoses based on patient complaints and symptoms. By leveraging advanced algorithms and medical knowledge bases, this assistant can provide valuable insights and recommendations, enhancing diagnostic accuracy and reducing the risk of misdiagnosis.
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+**Pharmacy Integration**: An NFC (Near-Field Communication) and mobile application-based system that allows patients to securely access their medical history and prescribed medications at pharmacy counters. This integration aims to improve medication adherence, reduce errors, and enhance patient safety.
 
-## Learn More
+**Patient Application**: A comprehensive dashboard that empowers patients to book appointments, access their medical reports, and receive diagnoses from previous appointments. This component promotes patient engagement, improves access to healthcare services, and fosters a collaborative approach to healthcare management.
 
-To learn more about Next.js, take a look at the following resources:
+**ABHA (Ayushman Bharat Health Account) Integration**: Integration with the government-initiated ABHA Number system, which serves as a secure and hassle-free method for accessing and sharing health records digitally. This integration ensures the interoperability of the proposed solution with existing healthcare infrastructure and promotes the adoption of digital health solutions.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+# Using the project
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+**For doctors:** Goto [Login page](https://web-frontend-blush.vercel.app/).
 
-## Deploy on Vercel
+**For patients:** Goto [Login page](https://web-frontend-blush.vercel.app/user).
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+**For guest login**: Click on the `guest login` button.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+**Signin page**:
+![Signin](website-preview/signin.png)
+
+**Signup page**:
+![Signup](website-preview/signup.png)
+
+# Doctors
+
+1. Create / Select a workspace.
+2. You will then have access to the following tabs:
+   - **Appointments**: View upcoming appointments and manage patient schedules.
+   - **Patients**: Manage patient records, view medical history, and track patient progress.
+   - **MedBot Assistant**: Access the intelligent assistant for differential diagnosis support.
+   - **Settings**: Customize your dashboard settings and preferences.
+   - **Create ABDM**: Create a new ABDM (Ayushman Bharat Digital Mission) record for patients.
+   - **Create user card**: Create a new user card for patients.
+
+**Workspaces**:
+
+![Workspaces](website-preview/doctor/doctor-workspaces.png)
+
+**Appointments Tab**:
+
+- See all your appointments.
+- Has a search bar to search for appointments.
+- Click on the appointment to view more details.
+- Inside an appointment:
+  - Click `+ Create Diagnosis` to create a new diagnosis.
+
+![Appointments](website-preview/doctor/doctor-appointments.png)
+
+![Appointment-details](website-preview/doctor/doctor-patient-appointment.png)
+
+![Create-diagnosis](website-preview/doctor/doctor-create-diagnosis.png)
+
+**Patients Tab**:
+
+- See all your patients.
+- Has a search bar to search for patients.
+
+![Patients](website-preview/doctor/doctor-patients.png)
+
+**MedBot Assistant Tab**:
+
+- Use the MedBot Assistant to get differential diagnosis suggestions.
+- Uses `Whisper AI API` to analyze multi-lingual audio conversations between the doctor and the patient.
+- Also has a typing interface for the same.
+- Provides response containing the solutions, follow up questions and resources that are relevant.
+
+![MedBot](website-preview/doctor/doctor-medbot.png)
+
+**Create ABDM**:
+
+- Takes in the details of the patient and creates a new ABDM card for them.
+- Uses multiple factors for authentication and verification such as the `Adhaar card number`, `phone number`, and `multiple OTPs`.
+
+![Create-ABDM](website-preview/doctor/doctor-create-abdm.png)
+
+# Patients
+
+A patient has access to 2 tabs:
+
+- **Doctors**: View available doctors and book appointments.
+- **Appointments**: View upcoming appointments and book new appointments.
+
+**Doctors Tab**:
+
+- Has a search bar to search for doctors.
+- View all available doctors.
+- Click on a `doctor row` or the `View More` button to view their profile.
+- You will be shown all the workspaces that the particular doctor is a part of.
+- Click on the `Book Appointment` button to book an appointment with the doctor.
+- A modal opens up, choose the date and reason for the appointment.
+- Click on the `Book Appointment` button to book the appointment.
+
+![Doctors](website-preview/patient/patient-all-doctors.png)
+
+![Doctor-workspaces](website-preview/patient/patient-doctor-workspaces.png)
+
+![Book-appointment](website-preview/patient/patient-book-appointment.png)
+
+![Appointment-booked](website-preview/patient/patient-appointment-booked.png)
+
+**Appointments Tab**:
+
+- Has a search bar to search for appointments.
+- Displays all the appointments and their status.
+
+![Appointments](website-preview/patient/patient-appointments.png)
