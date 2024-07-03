@@ -1,4 +1,4 @@
-**Note: ** This is a hackathon project and hence, was planned, designed and coded in 2 days, so one might find work-arounds at a few places.
+**Note:** This is a hackathon project and hence, was planned, designed and coded in 2 days, so one might find work-arounds at a few places.
 
 # Problem Statement
 
