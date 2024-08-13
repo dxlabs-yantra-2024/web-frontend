@@ -117,3 +117,4 @@ A patient has access to 2 tabs:
 - Displays all the appointments and their status.
 
 ![Appointments](website-preview/patient/patient-appointments.png)
+# shopping-cart
